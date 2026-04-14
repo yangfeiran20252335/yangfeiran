@@ -1,0 +1,30 @@
+def main():
+    import sys
+    input = sys.stdin.read().split()
+    ptr = 0
+    
+    # 读取课程可容纳名额 K 和候补名单长度 L
+    K = int(input[ptr])
+    ptr += 1
+    L = int(input[ptr])
+    ptr += 1
+    
+    seen = set()      # 记录已出现的学号
+    result = []       # 存储去重后的有效名单
+    
+    for _ in range(L):
+        student_id = input[ptr]
+        ptr += 1
+        
+        # 只保留第一次出现的学号
+        if student_id not in seen:
+            seen.add(student_id)
+            result.append(student_id)
+            
+            # 优化：如果已经达到K个，后续无需再处理
+            if len(result) == K:
+                break
+    print(len(result))
+
+if __name__ == "__main__":
+    main()
