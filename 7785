@@ -1,0 +1,11 @@
+n = int(input())
+current = set()
+
+for _ in range(n):
+    name, action = input().split()
+    if action == "进入":
+        current.add(name)
+    else:
+        current.remove(name)
+for name in sorted(current):
+    print(name)
