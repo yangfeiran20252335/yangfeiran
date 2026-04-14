@@ -1,0 +1,7 @@
+n = int(input())
+count = {}
+for _ in range(n):
+    book = input().strip()
+    count[book] = count.get(book, 0) + 1
+sorted_books = sorted(count.items(), key=lambda x: (-x[1], x[0]))
+print(sorted_books[0][0])
