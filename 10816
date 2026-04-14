@@ -1,0 +1,26 @@
+import sys
+
+def solve():
+    input = sys.stdin.readline
+    try:
+        n = int(input().strip())
+    except ValueError:
+        return
+    card_counts = {}
+    cards = list(map(int, input().split()))
+
+    for card in cards:
+        if card in card_counts:
+            card_counts[card] += 1
+        else:
+            card_counts[card] = 1
+    m = int(input().strip())
+    targets = list(map(int, input().split()))
+    result = []
+    for target in targets:
+        count = card_counts.get(target, 0)
+        result.append(str(count))
+    print(" ".join(result))
+
+if __name__ == "__main__":
+    solve()
