@@ -1,0 +1,48 @@
+def load_vocabulary(file_path):
+    """从vocabulary.txt加载单词和释义，返回字典"""
+    vocab_dict = {}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                # 按空格分割，处理带引号的释义
+                parts = line.split(maxsplit=2)
+                if len(parts) >= 3:
+                    # 格式：序号 单词 释义
+                    _, word, meaning = parts
+                    vocab_dict[word.lower()] = meaning.strip('"')
+                elif len(parts) == 2:
+                    # 格式：单词 释义（没有序号）
+                    word, meaning = parts
+                    vocab_dict[word.lower()] = meaning.strip('"')
+    except FileNotFoundError:
+        print(f"오류: '{file_path}' 파일을 찾을 수 없습니다.")
+    return vocab_dict
+
+def main():
+    # 1. 加载单词表
+    vocab = load_vocabulary("vocabulary.txt")
+    if not vocab:
+        print("단어장을 불러올 수 없어 프로그램을 종료합니다.")
+        return
+
+    print("📚 영어 사전 프로그램입니다. 'exit'를 입력하면 종료합니다.")
+    while True:
+        user_input = input("단어를 입력하세요: ").strip()
+        if user_input.lower() == 'exit':
+            print("프로그램을 종료합니다.")
+            break
+        if not user_input:
+            continue
+        
+        # 2. 查找单词释义
+        meaning = vocab.get(user_input.lower())
+        if meaning:
+            print(f"{user_input}의 뜻: {meaning}")
+        else:
+            print(f"'{user_input}'는 사전에 없습니다.")
+
+if __name__ == "__main__":
+    main()
